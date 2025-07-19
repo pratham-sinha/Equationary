@@ -122,18 +122,17 @@ const LeaderboardItem= ({ score, rank, isCurrentUser }:{
   isCurrentUser:boolean,
 
 }) => {
-  let rankClasses = ''; // Base classes for the item container
-  let rankNumberClasses = ''; // Classes for the rank number circle
-  let nameClasses = ''; // Classes for the score name
-  let scoreClasses = ''; // Classes for the score score
+  let rankClasses = ''; 
+  let rankNumberClasses = '';
+  let nameClasses = ''; 
+  let scoreClasses = ''; 
 
-  // Default classes for light mode, with dark mode overrides using 'dark:' prefix
   rankClasses = 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200';
   rankNumberClasses = 'bg-gray-300 text-gray-800 dark:bg-gray-900 dark:text-white';
   nameClasses = 'text-gray-800 dark:text-gray-100';
   scoreClasses = 'text-blue-600 dark:text-yellow-300';
 
-  // Apply special styling for top 3, overriding defaults
+ 
   switch (rank) {
     case 1:
       rankClasses = 'bg-gradient-to-r from-yellow-400 to-yellow-300 text-gray-900 font-bold transform scale-105 shadow-lg';
@@ -154,12 +153,12 @@ const LeaderboardItem= ({ score, rank, isCurrentUser }:{
       scoreClasses = 'text-yellow-200';
       break;
     default:
-      // Default classes based on dark/light mode are already set above
+      
       break;
   }
 
-  // Add highlight for the current user, overriding other text classes if applicable
-  // Light mode default, dark mode override
+ 
+ 
   const currentUserHighlight = isCurrentUser
     ? 'animate-pulse scale-[1.04] font-extrabold text-black dark:text-blue-900 '
     : '';

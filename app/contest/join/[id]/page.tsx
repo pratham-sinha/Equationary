@@ -57,7 +57,7 @@ if(!kindeUser){
   if(!user){
     return redirect("/login")
   }
-  const now=new Date();
+  
   if(!kindeUser.email)return;
 
  
@@ -122,8 +122,8 @@ const scores = await prisma.score.findMany({
          points: s.points,
          submittedAt:s.submittedAt ,
          }))}
-         userId={user.id}
-         endTime={contest.endTime}
+         userId={user?.id}
+         endTime={contest?.endTime}
         />
 
          

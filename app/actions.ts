@@ -19,7 +19,7 @@ export async function handleBlogSubmission(formData:FormData){
     const content=formData.get("content");
     const url=formData.get("url");
 
-   // const file = formData.get("image") as File;
+   
 
     const data=await prisma.blogPost.create({
 
@@ -176,31 +176,3 @@ export async function submitAnswer({
     submittedAt:score.submittedAt,
   });
 }
-
-
- 
-
-// model Contest {
-//   id          String     @id @default(cuid())
-//   title       String
-//   description String?
-//   startTime   DateTime
-//   endTime     DateTime
-//   isActive    Boolean    @default(false)
-//   createdAt   DateTime   @default(now())
-
-//   hostId      String
-//   host        User       @relation("HostedContests", fields: [hostId], references: [id])
-
-//   questions   Question[]
-//   scores      Score[]  // participants + their answers/scores
-// }
-
-// model Question {
-//   id         String   @id @default(cuid())
-//   contestId  String
-//   contest    Contest  @relation(fields: [contestId], references: [id])
-//   text       String
-//   options    String[] // Exactly 4 options
-//   correct    Int      // index of correct option (0-3)
-// }
