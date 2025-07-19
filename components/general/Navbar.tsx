@@ -1,20 +1,20 @@
+"use client"
+
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./ModeToggle";
 import { LoginLink, LogoutLink, RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import Image from "next/image";
 
 
-export default async function Navbar() {
-  const { getUser, isAuthenticated } = getKindeServerSession();
-  const user = await getUser();
-  const isUserAuthenticated = await isAuthenticated();
-
+export default function Navbar() {
+  const { getUser } = useKindeBrowserClient();
+  const user = getUser();
   return (
     <>
     
-      <nav className="py-4 px-2 flex items-center justify-between shadow-md bg-white dark:bg-zinc-950 mb-1 rounded-2xl">
+      <nav className="w-full py-4 px-2 flex items-center justify-between shadow-md bg-white dark:bg-zinc-950 mb-1 rounded-2xl">
         
         <Link href="/">
        <h1 className="text-3xl font-semibold flex items-center pr-2">
@@ -25,7 +25,7 @@ export default async function Navbar() {
     height={40}
     className="relative top-[2px] hidden md:block"
   />
-  <span className="text-blue-500">EQUATIONARY</span>
+  <span className="text-blue-500 text-xl sm:text-2xl md:text-3xl">EQUATIONARY</span>
 </h1>
 
 
@@ -33,7 +33,7 @@ export default async function Navbar() {
 
         
         <div className="flex items-center gap-3">
-          {isUserAuthenticated && (
+          {user && (
             <Link href="/dashboard">
               <div className="relative size-8 overflow-hidden rounded-full">
                 <Image
@@ -48,7 +48,7 @@ export default async function Navbar() {
 
           <ModeToggle />
 
-          {isUserAuthenticated ? (
+          {user ? (
             <LogoutLink>
               <Button variant="secondary" size="sm" className="cursor-pointer">Logout</Button>
             </LogoutLink>

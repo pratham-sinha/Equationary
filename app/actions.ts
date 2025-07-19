@@ -4,6 +4,7 @@ import { prisma } from "./utils/db"
 import { redirect } from "next/navigation";
 import { ablyServer } from "./utils/ablyServer";
 import { isAdmin } from "./utils/isAdmin";
+import { revalidatePath } from "next/cache";
 
 
 export async function handleBlogSubmission(formData:FormData){
@@ -34,7 +35,8 @@ export async function handleBlogSubmission(formData:FormData){
 
 
         },
-    });          
+    });  
+    revalidatePath("/blogs");        
    
     return redirect("/dashboard");
 }
@@ -85,7 +87,8 @@ export async function createContest(formData: FormData) {
       }
     }
   });
-
+ 
+  revalidatePath("/contest");
 
   redirect(`/contest/${contest.id}`);
 }

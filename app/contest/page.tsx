@@ -1,7 +1,7 @@
 import {prisma} from "../utils/db"
 import { ContestCard } from "@/components/general/ContestCard";
 
-
+export const revalidate=60;
 
 async function getContests(){
   const contests=await prisma.contest.findMany({
