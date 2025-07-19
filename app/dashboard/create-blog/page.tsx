@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2 } from 'lucide-react';
 import RenderMathText from '@/components/Extras/RenderMathText';
+import Image from 'next/image';
 
 export default function CreateBlogRoute() {
   const [imageUrl, setImageUrl] = useState('');
@@ -97,10 +98,12 @@ export default function CreateBlogRoute() {
               <Input type="file" accept="image/*" onChange={handleImageUpload} />
               {uploading && <p className="text-sm text-muted"><Loader2 className='animate-spin'/></p>}
               {imageUrl && (
-                <img
+                <Image
                   src={imageUrl}
                   alt="Preview"
-                  className="w-32 h-32 object-cover rounded"
+                  width={128}
+                  height={128}
+                  className="object-cover rounded"
                 />
               )}
 

@@ -1,4 +1,4 @@
-import { CalendarClock, Dot } from "lucide-react";
+import { CalendarClock } from "lucide-react";
 import { Button } from "../ui/button"
 import Link from "next/link";
 

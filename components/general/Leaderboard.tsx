@@ -54,7 +54,7 @@ export function Leaderboard({contestId,initialScores,userId,endTime}:{
     return () => {
       channel.unsubscribe();
     };
-  }, [contestId]);
+  }, [contestId,endTime]);
 
     const top10 = scores.slice(0, 10);
     const currentUserRank = scores.findIndex((s) => s.userId === userId);

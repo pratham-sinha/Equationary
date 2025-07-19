@@ -21,7 +21,7 @@ export async function handleBlogSubmission(formData:FormData){
 
    
 
-    const data=await prisma.blogPost.create({
+    await prisma.blogPost.create({
 
         data:{
             title:title as string,
