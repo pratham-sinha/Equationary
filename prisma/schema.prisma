@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BlogPost{
+  id String @id @default(uuid())
+  title String
+  content String
+  imageUrl String
+  authorId String
+  authorName String
+  authorImage String
+  
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+}
+
+
+model User {
+  id              String    @id @default(cuid())
+  kindeId         String    @unique
+  username        String?
+  createdAt       DateTime  @default(now())
+  scores          Score[]             // Participated contests
+  hostedContests  Contest[] @relation("HostedContests") //not used as of now
+  submissions Submission[]
+}
+
+model Contest {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  isActive    Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+
+  hostId      String
+  host        User       @relation("HostedContests", fields: [hostId], references: [id])
+
+  questions   Question[]
+  scores      Score[]  // participants + their answers/scores
+  submissions Submission[]
+}
+
+model Question {
+  id         String   @id @default(cuid())
+  contestId  String
+  contest    Contest  @relation(fields: [contestId], references: [id])
+  text       String
+  options    String[] //4 options
+  answer    Int      // index of correct option(0-3)
+  submissions Submission[]
+  createdAt DateTime @default(now()) 
+}
+
+model Score {
+  id          String   @id @default(cuid())
+  userId      String
+  contestId   String
+  user        User     @relation(fields: [userId], references: [id])
+  contest     Contest  @relation(fields: [contestId], references: [id])
+  points      Int      // Total score
+  answers     Json ?    // Example: { "q1": 2, "q2": 1 }//not using {#V1}
+  submittedAt DateTime @default(now())
+  @@unique([userId, contestId])
+}
+
+model Submission {
+  id         String   @id @default(cuid())
+  userId     String
+  contestId  String
+  questionId String
+  selected   Int
+  isCorrect  Boolean
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id])
+  contest    Contest  @relation(fields: [contestId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id])
+
+  @@unique([userId, contestId, questionId])
+}
+
