@@ -18,13 +18,14 @@ const features = [
   },
   {
     title: "Rich Problem Set",
-    desc: "Handpicked MCQs across topics with LaTeX and interactive diagrams.",
+    desc: "Handpicked MCQs across topics with LaTeX support.",
     badge: "Curated",
   },
   {
     title: "Contest Hosting",
-    desc: "Create and manage contests easily with our dashboard.",
+    desc: "Easily create and manage contests from a powerful dashboard. (Currently available to admins)",
     badge: "Creator",
+
   },
   {
     title: "Mobile Responsive",

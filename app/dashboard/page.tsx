@@ -4,6 +4,7 @@ import Link from "next/link"
 import { prisma } from "../utils/db"
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"
 import { BlogPostCard } from "@/components/general/BlogPostCard"
+import { isAdmin } from "../utils/isAdmin"
 
 async function getMyBlogs(userId:string){
   const data=await prisma.blogPost.findMany({
@@ -20,6 +21,7 @@ async function getMyBlogs(userId:string){
 export default async function DashboardRoute() {
   const {getUser}=getKindeServerSession();
   const user=await getUser();
+  const allowed=await isAdmin();
 
   if(!user)return
 
@@ -29,7 +31,16 @@ export default async function DashboardRoute() {
     <div>
       <div className="flex items-center  justify-between mb-4 ">
         <h2 className="text-xl font-medium">Your Blogs</h2>
-        <Link className={buttonVariants()} href="/dashboard/create-blog">Create Posts</Link>
+        <div className="gap-2 flex ">
+
+        <Link className={buttonVariants()} href="/dashboard/create-blog">Create Post</Link>
+        {allowed && (
+  <Link className={buttonVariants()} href="/dashboard/create-contest">
+    Create Contest
+  </Link>
+)}
+        </div>
+
       </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
          {
