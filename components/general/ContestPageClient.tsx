@@ -52,6 +52,7 @@ export default function ContestPageClient({ contest, userId , submittedQuestionI
           </div>
 
           <QuestionCard
+           key={currentQuestion.id} 
             question={currentQuestion}
             userId={userId||""}
             contestId={contest.id}
