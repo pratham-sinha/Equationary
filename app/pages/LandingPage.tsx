@@ -12,8 +12,8 @@ const features = [
     badge: "Scoring",
   },
   {
-    title: "Educational Blogs",
-    desc: "Concept-driven blogs to strengthen your basics and dive deeper into topics.",
+    title: "Post Educational Blogs",
+    desc: "Concept-driven blogs by community to strengthen your basics and dive deeper into topics.",
     badge: "Learning",
   },
   {
@@ -23,7 +23,7 @@ const features = [
   },
   {
     title: "Contest Hosting",
-    desc: "Easily create and manage contests from a powerful dashboard. (Currently available to admins)",
+    desc: "Easily create and manage contests. (Currently available to admins)",
     badge: "Creator",
 
   },

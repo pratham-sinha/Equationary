@@ -20,8 +20,9 @@ async function getData(id: string) {
   return data;
 }
 
-export default async function BlogIdPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+type Params = Promise<{ id: string }>;
+export default async function BlogIdPage({ params }: { params: Params }) {
+  const { id } = await params;
   const data = await getData(id);
 
   return (
