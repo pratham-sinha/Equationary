@@ -34,7 +34,6 @@ export function QuestionCard({
   onSubmitSuccess,
 }: QuestionProps) {
   const [selected, setSelected] = useState<number | null>(null);
-  const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     if(!selected){
@@ -49,7 +48,7 @@ export function QuestionCard({
   }
   }
 
-  const isDisabled = alreadySubmitted || submitting;
+  const isDisabled = alreadySubmitted ;
   const currSubmission=submissions.find((s) => s.questionId===question.id);
 
 
@@ -87,16 +86,12 @@ export function QuestionCard({
         type="submit"
          
         className="cursor-pointer"
-        disabled={isDisabled || selected === null || submitting}
+        disabled={isDisabled || selected === null }
        
       >
         {alreadySubmitted
           ? "Submitted"
-          : submitting
-          ? <>
-          <Loader2 className='size-5 animate-spin'/>
-           Submitting...
-            </>
+          
           : "Submit"}
       </Button>
     </form>
