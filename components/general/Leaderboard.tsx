@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ablyClient } from "@/app/utils/ablyClient";
-
+import type { Message } from "ably";
 
 type Score = {
   userId: string;
@@ -20,43 +20,41 @@ export function Leaderboard({contestId,initialScores,userId,endTime}:{
   const [scores, setScores] = useState<Score[]>(initialScores);
 
   useEffect(() => {
-  const now = new Date();
-  const end = new Date(endTime); 
+    const now = new Date();
+    const end = new Date(endTime); 
 
-  if (now > end) return;
+    if (now > end) return;
+    const channel = ablyClient.channels.get(`contest-${contestId}`);
 
-  const channel = ablyClient.channels.get(`contest-${contestId}`);
+    const updateScore = (newScore: Score) => {
+      setScores((prev) => {
+        const updated = [...prev];
+        const index = updated.findIndex((s) => s.userId === newScore.userId);
 
-  const updateScore = (newScore: Score) => {
-    setScores((prev) => {
-      const updated = [...prev];
-      const index = updated.findIndex((s) => s.userId === newScore.userId);
+        if (index !== -1) {
+          updated[index] = newScore;
+        } else {
+          updated.push(newScore);
+        }
 
-      if (index !== -1) {
-        updated[index] = newScore;
-      } else {
-        updated.push(newScore);
-      }
-
-      return updated.sort((a, b) => {
-        if (b.points !== a.points) return b.points - a.points;
-        return new Date(a.submittedAt).getTime() - new Date(b.submittedAt).getTime();
+        
+        return updated.sort((a, b) => {
+            if(b.points!==a.points)
+            return b.points - a.points;
+             
+            return new Date(a.submittedAt).getTime()-new Date(b.submittedAt).getTime();
+        });
       });
-    });
-  };
+    };
+    const handleMessage = (msg: Message) => {
+  updateScore(msg.data);
+};
+    channel.subscribe("score-update",handleMessage);
 
-  
-  const handleMessage = (msg: any) => {
-    updateScore(msg.data);
-  };
-
-  channel.subscribe("score-update", handleMessage);
-
-
-  return () => {
-    channel.unsubscribe("score-update", handleMessage);
-  };
-}, [contestId, endTime]);
+    return () => {
+      channel.unsubscribe("score-update",handleMessage);
+    };
+  }, [contestId,endTime]);
 
     const top10 = scores.slice(0, 10);
     const currentUserRank = scores.findIndex((s) => s.userId === userId);
