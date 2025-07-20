@@ -54,7 +54,7 @@ export function QuestionCard({
       console.error("Submission error:", error);
     } finally {
       setSubmitting(false);
-      setSelected(null);
+      
       
     }
   }

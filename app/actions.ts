@@ -179,4 +179,6 @@ export async function submitAnswer({
     points: score.points,
     submittedAt:score.submittedAt,
   });
+
+  revalidatePath(`/contest/${contestId}`);
 }
