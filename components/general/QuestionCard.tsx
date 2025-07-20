@@ -65,9 +65,9 @@ export function QuestionCard({
 
   return (
     <form onSubmit={handleSubmit} className="border-2 border-zinc-900 p-4 rounded-xl space-y-3 w-full">
-      <RenderMathText as={"h2"} className="text-base md:text-lg font-semibold mb-2 nocopy"  content={question.text}/>
+      <RenderMathText as={"h2"} className="text-base md:text-lg font-semibold mb-2 nocopy"  content={question?.text}/>
 
-      {question.options.map((opt, idx) => (
+      {question?.options.map((opt, idx) => (
        <button
     key={idx}
     type="button"

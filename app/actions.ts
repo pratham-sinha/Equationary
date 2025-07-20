@@ -8,6 +8,7 @@ import { revalidatePath } from "next/cache";
 
 
 export async function handleBlogSubmission(formData:FormData){
+  console.log("Entered submission");
      const {getUser}=getKindeServerSession();
      const user=await getUser();
 

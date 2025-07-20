@@ -17,24 +17,26 @@ export default function RenderMathText({
   const ref = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    if (!ref.current) return
+    if (!ref.current) return;
 
-    const html = content
-      .replace(/\$\$([\s\S]+?)\$\$/g, (_, expr) =>
-        katex.renderToString(expr.trim(), {
-          displayMode: true,
-          throwOnError: false,
-        })
-      )
-      .replace(/\$([\s\S]+?)\$/g, (_, expr) =>
-        katex.renderToString(expr.trim(), {
-          displayMode: false,
-          throwOnError: false,
-        })
-      )
+  const safeContent = content ?? "";
 
-    ref.current.innerHTML = html
-  }, [content])
+  const html = safeContent
+    .replace(/\$\$([\s\S]+?)\$\$/g, (_, expr) =>
+      katex.renderToString(expr.trim(), {
+        displayMode: true,
+        throwOnError: false,
+      })
+    )
+    .replace(/\$([\s\S]+?)\$/g, (_, expr) =>
+      katex.renderToString(expr.trim(), {
+        displayMode: false,
+        throwOnError: false,
+      })
+    );
+
+  ref.current.innerHTML = html;
+}, [content]);
 
   return <Tag ref={ref} className={className} />
 }

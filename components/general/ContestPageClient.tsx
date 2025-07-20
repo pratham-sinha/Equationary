@@ -55,7 +55,7 @@ export default function ContestPageClient({ contest, userId , submittedQuestionI
             question={currentQuestion}
             userId={userId||""}
             contestId={contest.id}
-            alreadySubmitted={submittedIds.includes(currentQuestion.id)}
+            alreadySubmitted={submittedIds.includes(currentQuestion?.id)}
             submissions={submissions}
             onSubmitSuccess={() => setSubmittedIds((prev) => [...prev, currentQuestion.id])}
           />

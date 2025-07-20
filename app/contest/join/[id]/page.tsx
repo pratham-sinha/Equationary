@@ -44,7 +44,7 @@ async function getContest(id: string) {
 type Params = Promise<{ id: string }>;
 
 export default async function ContestPage({ params }: { params: Params }) {
-
+   
   const { getUser } = getKindeServerSession();
   const kindeUser = await getUser();
 if(!kindeUser){
@@ -91,7 +91,7 @@ if(!kindeUser){
   },
 });
 
-const submittedQuestionIds = submissions.map((s) => s.questionId);
+const submittedQuestionIds = submissions.map((s) => s.questionId) ?? [];;
 
 
 const scores = await prisma.score.findMany({
@@ -107,7 +107,7 @@ const scores = await prisma.score.findMany({
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 pt-4 w-full ">
       <div className="md:col-span-3 min-w-0 w-full">
        
-      <ContestPageClient contest={contest} userId={user.id} submittedQuestionIds={submittedQuestionIds} submissions={submissions} />
+      <ContestPageClient contest={contest} userId={user?.id} submittedQuestionIds={submittedQuestionIds} submissions={submissions} />
       </div>
 
       

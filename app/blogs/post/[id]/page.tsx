@@ -6,8 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-
-
 async function getData(id: string) {
   const data = await prisma.blogPost.findUnique({
     where: {
@@ -16,16 +14,14 @@ async function getData(id: string) {
   });
 
   if (!data) {
-    return notFound();
+    notFound();
   }
 
   return data;
 }
 
-type Params = Promise<{ id: string }>;
-
-export default async function BlogIdPage({ params }: { params: Params }) {
-  const { id } = await params;
+export default async function BlogIdPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const data = await getData(id);
 
   return (
@@ -58,20 +54,21 @@ export default async function BlogIdPage({ params }: { params: Params }) {
         </div>
       </div>
 
-      <div className="relative h-[400px] w-full mb-8 overflow-hidden rounded-lg">
-        <Image
-          src={data.imageUrl}
-          alt={data.title}
-          fill
-          className="object-cover"
-          priority
-        />
-      </div>
+      {data.imageUrl && (
+        <div className="relative h-[400px] w-full mb-8 overflow-hidden rounded-lg">
+          <Image
+            src={data.imageUrl}
+            alt={data.title}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+      )}
 
       <Card>
         <CardContent>
-          <RenderMathText as={"p"}  content={data.content}/>
-        
+          <RenderMathText as="p" content={data.content} />
         </CardContent>
       </Card>
     </div>

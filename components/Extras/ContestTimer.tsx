@@ -27,7 +27,7 @@ export function ContestTimer({ endTime }: { endTime: Date }) {
   }, [endTime]);
 
   return (
-    <div className="text-lg font-mono text-red-600 text-center">
+    <div className="text-sm font-mono text-red-500 text-center">
      {new Date()>endTime?" ": `Contest ends in: ${remainingTime}`}
     </div>
   );
