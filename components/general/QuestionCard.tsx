@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { submitAnswer } from "@/app/actions";
 import { Button } from "../ui/button";
-import { Loader2 } from "lucide-react";
 import RenderMathText from "../Extras/RenderMathText";
 
 type Submission={
@@ -35,7 +34,7 @@ export function QuestionCard({
 }: QuestionProps) {
   const [selected, setSelected] = useState<number | null>(null);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit() {
     if(!selected){
       return;
     }
