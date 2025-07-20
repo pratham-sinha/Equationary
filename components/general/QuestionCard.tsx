@@ -51,9 +51,11 @@ export function QuestionCard({
   });
 
   if (res?.status === "success") {
+    setSubmitting(false);
     console.log("Submitted done")
     onSubmitSuccess();
   } else {
+    setSubmitting(false);
     console.error("Submission failed:", res?.message || "Unknown error");
     alert(res?.message || "Submission failed");
   }
