@@ -34,7 +34,8 @@ export function QuestionCard({
 }: QuestionProps) {
   const [selected, setSelected] = useState<number | null>(null);
 
-  async function handleSubmit() {
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
     if(!selected){
       return;
     }
