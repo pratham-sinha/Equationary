@@ -43,20 +43,26 @@ export function QuestionCard({
     setSubmitting(true); 
 
     try {
-      await submitAnswer({
-        questionId: question.id,
-        selected,
-        contestId,
-        userId,
-      });
-      onSubmitSuccess();
-    } catch (error) {
-      console.error("Submission error:", error);
-    } finally {
-      setSubmitting(false);
-      
-      
-    }
+  const res = await submitAnswer({
+    questionId: question.id,
+    selected,
+    contestId,
+    userId,
+  });
+
+  if (res?.status === "success") {
+    onSubmitSuccess();
+  } else {
+    console.error("Submission failed:", res?.message || "Unknown error");
+    alert(res?.message || "Submission failed");
+  }
+} catch (error) {
+  console.error("Submission error:", error);
+  alert("Something went wrong while submitting.");
+} finally {
+  setSubmitting(false);
+}
+
   }
 
   const isDisabled = alreadySubmitted || submitting;

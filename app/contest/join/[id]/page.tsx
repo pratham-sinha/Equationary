@@ -5,6 +5,12 @@ import ContestPageClient from "@/components/general/ContestPageClient";
 import { Leaderboard } from "@/components/general/Leaderboard";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { notFound, redirect } from "next/navigation";
+import dayjs from "dayjs"
+import utc from "dayjs/plugin/utc"
+import timezone from "dayjs/plugin/timezone"
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 async function getContest(id: string) {
   const contest = await prisma.contest.findUnique({
@@ -30,7 +36,7 @@ async function getContest(id: string) {
     notFound();
   }
   const now=new Date();
-  const hasStarted=now>=contest.startTime
+  const hasStarted = now.getTime() >= new Date(contest.startTime).getTime();
 
   //not sending qstn to the client if contest has not started
   return {
@@ -67,12 +73,15 @@ if(!kindeUser){
 
 
   if(!contest.hasStarted && !allowed){
+      
+    
+      const formattedStart = dayjs(contest.startTime).tz("Asia/Kolkata").format("DD MMM YYYY, h:mm A");
     return(
       <div className="text-center">
         <h1 className="text-2xl font-bold">{contest.title}</h1>
         <p className="text-lg">{contest.description}</p>
       <div className="p-6 text-center font-semibold">
-         Contest has not started yet. Please come back at {contest.startTime.toLocaleString()}.
+         Contest has not started yet. Please come back at {formattedStart}.
       </div>
       </div>
     )

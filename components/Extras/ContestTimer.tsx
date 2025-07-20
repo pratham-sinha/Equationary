@@ -26,9 +26,10 @@ export function ContestTimer({ endTime }: { endTime: Date }) {
     return () => clearInterval(interval);
   }, [endTime]);
 
+  const end=new Date(endTime);
   return (
     <div className="text-sm font-mono text-red-500 text-center">
-     {new Date()>endTime?" ": `Contest ends in: ${remainingTime}`}
+     {new Date()>end ?" ": `Contest ends in: ${remainingTime}`}
     </div>
   );
 }
