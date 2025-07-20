@@ -51,6 +51,7 @@ export function QuestionCard({
   });
 
   if (res?.status === "success") {
+    console.log("Submitted done")
     onSubmitSuccess();
   } else {
     console.error("Submission failed:", res?.message || "Unknown error");
@@ -60,7 +61,9 @@ export function QuestionCard({
   console.error("Submission error:", error);
   alert("Something went wrong while submitting.");
 } finally {
+  console.log("in finally");
   setSubmitting(false);
+  console.log("after setSubmitting false");
 }
 
   }
