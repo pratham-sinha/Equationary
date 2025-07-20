@@ -6,6 +6,12 @@ import { ablyServer } from "./utils/ablyServer";
 import { isAdmin } from "./utils/isAdmin";
 import { revalidatePath } from "next/cache";
 
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export async function handleBlogSubmission(formData:FormData){
   console.log("Entered submission");
@@ -59,8 +65,10 @@ export async function createContest(formData: FormData) {
 
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
-  const startTime = new Date(formData.get("startTime") as string);
-  const endTime = new Date(formData.get("endTime") as string);
+  const rawStartTime = formData.get("startTime") as string;
+
+const startTime = dayjs.tz(rawStartTime, "Asia/Kolkata").toDate();
+const endTime = dayjs.tz(formData.get("endTime") as string, "Asia/Kolkata").toDate();
 
   const questions = [];
 
