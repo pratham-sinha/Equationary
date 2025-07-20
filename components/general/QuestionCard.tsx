@@ -37,37 +37,16 @@ export function QuestionCard({
   const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (selected === null) return;
-
-    setSubmitting(true); 
-
-    try {
-  const res = await submitAnswer({
-    questionId: question.id,
-    selected,
-    contestId,
-    userId,
-  });
+    if(!selected){
+      return;
+    }
+     const res = await submitAnswer({ questionId:question.id, selected, contestId, userId });
 
   if (res?.status === "success") {
-    setSubmitting(false);
-    console.log("Submitted done")
     onSubmitSuccess();
   } else {
-    setSubmitting(false);
-    console.error("Submission failed:", res?.message || "Unknown error");
-    alert(res?.message || "Submission failed");
+    alert(res?.message || "Something went wrong.");
   }
-} catch (error) {
-  console.error("Submission error:", error);
-  alert("Something went wrong while submitting.");
-} finally {
-  console.log("in finally");
-  setSubmitting(false);
-  console.log("after setSubmitting false");
-}
-
   }
 
   const isDisabled = alreadySubmitted || submitting;
