@@ -114,6 +114,7 @@ export async function submitAnswer({
   contestId: string;
 }){
   try{
+    console.log("answer submission entered");
      const now = new Date();
   const contest = await prisma.contest.findUnique({
     where: { id: contestId },
@@ -160,7 +161,7 @@ export async function submitAnswer({
       isCorrect:isCorrect
     },
   });
-
+ console.log("answer submission saved");
  
 
   const score = await prisma.score.upsert({
@@ -184,23 +185,23 @@ export async function submitAnswer({
       user: true,
     },
   });
-   
+   console.log("score updated");
   const channel = ablyServer.channels.get(`contest-${contestId}`);
   await channel.publish("score-update", {
     userId: score.userId,
     username: score.user.username,
     points: score.points,
     submittedAt:score.submittedAt,
+    
   });
-
-  ablyServer.close()
+console.log("ably updated"),
+ 
   revalidatePath(`/contest/${contestId}`);
+  console.log("revalidated");
   return { status: "success", isCorrect };
 }
 catch{
-  if (ablyServer && ablyServer.connection.state === 'connected') {
-        ablyServer.close();
-    }
+ alert("server err in submission");
   return {status:"error", message:"server error during submission"}
 }
 }
