@@ -14,7 +14,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export async function handleBlogSubmission(formData:FormData){
-  console.log("Entered submission");
+ 
      const {getUser}=getKindeServerSession();
      const user=await getUser();
 
@@ -99,7 +99,7 @@ const endTime = dayjs.tz(formData.get("endTime") as string, "Asia/Kolkata").toDa
  
   revalidatePath("/contest");
 
-  redirect(`/contest/${contest.id}`);
+  redirect(`/contest`);
 }
 
 export async function submitAnswer({
@@ -113,6 +113,7 @@ export async function submitAnswer({
   userId: string;
   contestId: string;
 }){
+  try{
      const now = new Date();
   const contest = await prisma.contest.findUnique({
     where: { id: contestId },
@@ -192,6 +193,14 @@ export async function submitAnswer({
     submittedAt:score.submittedAt,
   });
 
+  ablyServer.close()
   revalidatePath(`/contest/${contestId}`);
   return { status: "success", isCorrect };
+}
+catch{
+  if (ablyServer && ablyServer.connection.state === 'connected') {
+        ablyServer.close();
+    }
+  return {status:"error", message:"server error during submission"}
+}
 }

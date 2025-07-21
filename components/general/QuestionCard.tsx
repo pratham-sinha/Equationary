@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { submitAnswer } from "@/app/actions";
 import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
 import RenderMathText from "../Extras/RenderMathText";
 
 type Submission={
@@ -33,22 +34,45 @@ export function QuestionCard({
   onSubmitSuccess,
 }: QuestionProps) {
   const [selected, setSelected] = useState<number | null>(null);
-
+  const [submitting, setSubmitting] = useState(false);
+   useEffect(() => {
+    // If the question becomes 'alreadySubmitted', reset the submitting state
+    // This handles cases where the prop changes without a full remount.
+    if (alreadySubmitted) {
+      setSubmitting(false);
+      setSelected(null); // Also reset selected option if it's already submitted
+    }
+  }, [alreadySubmitted]);
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if(!selected){
-      return;
-    }
-     const res = await submitAnswer({ questionId:question.id, selected, contestId, userId });
+    if (selected === null) return;
+
+    setSubmitting(true); 
+
+    try {
+  const res = await submitAnswer({
+    questionId: question.id,
+    selected,
+    contestId,
+    userId,
+  });
 
   if (res?.status === "success") {
+    setSubmitting(false);
     onSubmitSuccess();
   } else {
-    alert(res?.message || "Something went wrong.");
+    setSubmitting(false);
+    alert(res?.message || "Submission failed");
   }
+} catch (error) {
+  alert("Something went wrong while submitting.");
+} finally {
+  setSubmitting(false);
+}
+
   }
 
-  const isDisabled = alreadySubmitted ;
+  const isDisabled = alreadySubmitted || submitting;
   const currSubmission=submissions.find((s) => s.questionId===question.id);
 
 
@@ -86,12 +110,16 @@ export function QuestionCard({
         type="submit"
          
         className="cursor-pointer"
-        disabled={isDisabled || selected === null }
+        disabled={isDisabled || selected === null || submitting}
        
       >
         {alreadySubmitted
           ? "Submitted"
-          
+          : submitting
+          ? <>
+          <Loader2 className='size-5 animate-spin'/>
+           Submitting...
+            </>
           : "Submit"}
       </Button>
     </form>
