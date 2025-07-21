@@ -47,6 +47,7 @@ export function Leaderboard({contestId,initialScores,userId,endTime}:{
       });
     };
     const handleMessage = (msg: Message) => {
+      if(!msg?.data?.userId || !msg?.data?.points)return;
   updateScore(msg.data);
 };
     channel.subscribe("score-update",handleMessage);
