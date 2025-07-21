@@ -84,7 +84,7 @@ const endTime = dayjs.tz(formData.get("endTime") as string, "Asia/Kolkata").toDa
     questions.push({ text, options, answer });
   }
 
-  const contest = await prisma.contest.create({
+  await prisma.contest.create({
     data: {
       title,
       description,

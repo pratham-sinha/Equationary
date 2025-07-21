@@ -64,7 +64,8 @@ export function QuestionCard({
     setSubmitting(false);
     alert(res?.message || "Submission failed");
   }
-} catch (error) {
+} catch  {
+  
   alert("Something went wrong while submitting.");
 } finally {
   setSubmitting(false);
