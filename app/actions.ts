@@ -194,7 +194,7 @@ export async function submitAnswer({
     submittedAt:score.submittedAt,
     
   });
-console.log("ably updated"),
+  console.log("ably updated")
  
   revalidatePath(`/contest/${contestId}`);
   console.log("revalidated");
