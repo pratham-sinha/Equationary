@@ -37,7 +37,6 @@ export function QuestionCard({
   const [submitting, setSubmitting] = useState(false);
 
    useEffect(() => {
-     console.log("useeffect");
     if (alreadySubmitted) {
       setSubmitting(false);
       setSelected(null); // Also reset selected option if it's already submitted
@@ -47,7 +46,7 @@ export function QuestionCard({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (selected === null) return;
-    console.log("inside handleSubmit")
+  
 
     setSubmitting(true); 
 
@@ -58,14 +57,14 @@ export function QuestionCard({
     contestId,
     userId,
   });
-  console.log("db saved")
+
 
   if (res?.status === "success") {
-     console.log("success")
+    
     setSubmitting(false);
-    console.log("setsubmitting false")
+   
     onSubmitSuccess();
-    console.log("called onSubmitSuccess");
+   
   } else {
     setSubmitting(false);
     alert(res?.message || "Submission failed");
@@ -75,7 +74,7 @@ export function QuestionCard({
   alert("Something went wrong while submitting.");
 } finally {
   setSubmitting(false);
-  console.log("finally called");
+  
 }
 
   }
