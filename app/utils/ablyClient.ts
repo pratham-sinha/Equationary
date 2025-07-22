@@ -1,5 +1,7 @@
-import Ably from "ably";
+import Ably from 'ably';
 
-export const ablyClient = new Ably.Realtime({
-  key: process.env.NEXT_PUBLIC_ABLY_KEY,
-});
+export const ablyClient = (contestId: string, userId: string) => {
+  return new Ably.Realtime({
+    authUrl: `/api/createAblyToken?contestId=${contestId}&userId=${userId}`,
+  });
+};

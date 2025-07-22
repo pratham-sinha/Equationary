@@ -24,7 +24,8 @@ export function Leaderboard({contestId,initialScores,userId,endTime}:{
     const end = new Date(endTime); 
 
     if (now > end) return;
-    const channel = ablyClient.channels.get(`contest-${contestId}`);
+    const client = ablyClient(contestId, userId);
+    const channel = client.channels.get(`contest-${contestId}`);
 
     const updateScore = (newScore: Score) => {
       setScores((prev) => {
