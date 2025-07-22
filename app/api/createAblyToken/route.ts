@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
         "Content-Type": "application/json",
       },
     });
-  } catch (err) {
+  } catch{
     return new Response(JSON.stringify({ error: "Failed to create token" }), {
       status: 500,
       headers: {
