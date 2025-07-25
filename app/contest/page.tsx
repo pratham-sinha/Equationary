@@ -13,6 +13,11 @@ async function getContests(){
       endTime    :true ,
       isActive:true,
       hostId:true,
+      _count:{
+        select:{
+          scores:true,
+        }
+      }
     },
     orderBy:{
       startTime:"desc",
@@ -38,7 +43,7 @@ export default async function Contest() {
               <div key={contest.id} className="p-2 ">
             
                 
-                <ContestCard title={contest.title} startTime={contest.startTime} endTime={contest.endTime} id={contest.id}/>
+                <ContestCard title={contest.title} startTime={contest.startTime} endTime={contest.endTime} id={contest.id} count={contest._count.scores}/>
             
             
             </div>

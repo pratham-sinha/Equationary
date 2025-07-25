@@ -13,11 +13,13 @@ export function ContestCard({
   startTime,
   endTime,
   id,
+  count,
 }: {
   title: string;
   startTime: Date;
   endTime: Date;
   id:string;
+  count:number;
 }) {
   const now = new Date();
   const hasStarted = now.getTime() >= startTime.getTime();
@@ -33,9 +35,14 @@ export function ContestCard({
         </h2>
 
         {hasEnded ? (
-          <span className="text-sm px-2 py-0.5 rounded-full bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold">
+          <div className="flex  gap-2">
+          <span className="text-sm text-center px-2 py-0.5 rounded-full bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold">
             Ended
           </span>
+          <span className="text-sm text-center px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 font-medium">
+            {count} participant{count !== 1 && "s"}
+          </span>
+          </div>
         ) : hasStarted ? (
           <span className="relative flex size-3">
             <span className="absolute h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>

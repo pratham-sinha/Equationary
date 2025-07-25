@@ -5,6 +5,7 @@ import { submitAnswer } from "@/app/actions";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import RenderMathText from "../Extras/RenderMathText";
+import { toast } from "sonner"
 
 type Submission={
   questionId:string,
@@ -65,7 +66,13 @@ export function QuestionCard({
    
     onSubmitSuccess();
    
-  } else {
+  }
+  else if(res?.status === "error"){
+   toast(res.message,{
+          description: "Be on time next time :)"}
+        )
+  }
+  else {
     setSubmitting(false);
     alert(res?.message || "Submission failed");
   }
