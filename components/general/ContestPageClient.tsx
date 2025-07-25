@@ -44,7 +44,7 @@ export default function ContestPageClient({ contest, userId , submittedQuestionI
   
       <div className="col-span-3 space-y-6 mb-4">
         <h1 className="text-2xl font-bold">{contest.title}</h1>
-        <p className="text-lg">{contest.description}</p>
+        <p className="text-md">{contest.description}</p>
 
         <div>
           <div className="text-sm text-gray-400 mb-2">
@@ -58,7 +58,7 @@ export default function ContestPageClient({ contest, userId , submittedQuestionI
             contestId={contest.id}
             alreadySubmitted={submittedIds.includes(currentQuestion?.id)}
             submissions={submissions}
-            onSubmitSuccess={() => setSubmittedIds((prev) => [...prev, currentQuestion.id])}
+            onSubmitSuccess={() => setSubmittedIds((prev) => [...prev, currentQuestion?.id])}
           />
 
           <div className="flex gap-4 mt-3">

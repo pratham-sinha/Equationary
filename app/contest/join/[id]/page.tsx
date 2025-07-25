@@ -37,11 +37,12 @@ async function getContest(id: string) {
   }
   const now=new Date();
   const hasStarted = now.getTime() >= new Date(contest.startTime).getTime();
+  const isAllowed=await isAdmin();
 
   //not sending qstn to the client if contest has not started
   return {
     ...contest,
-    questions:hasStarted? contest.questions:[],
+    questions:(hasStarted||isAllowed) ? contest.questions:[],
     hasStarted,
   };
 }
@@ -77,11 +78,11 @@ if(!kindeUser){
     
       const formattedStart = dayjs(contest.startTime).tz("Asia/Kolkata").format("DD MMM YYYY, h:mm A");
     return(
-      <div className="text-center">
+      <div className="text-center flex flex-col gap-2 mt-6">
         <h1 className="text-2xl font-bold">{contest.title}</h1>
-        <p className="text-lg">{contest.description}</p>
+        <p className="text-md mt-3">{contest.description}</p>
       <div className="p-6 text-center font-semibold">
-         Contest has not started yet. Please come back at {formattedStart}.
+         Contest has not started yet. Please come back at {formattedStart} IST.
       </div>
       </div>
     )

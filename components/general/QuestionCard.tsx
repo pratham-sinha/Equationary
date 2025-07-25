@@ -91,7 +91,7 @@ export function QuestionCard({
 
 
   return (
-    <form onSubmit={handleSubmit} className="border-2 border-zinc-900 p-4 rounded-xl space-y-3 w-full">
+    <form onSubmit={handleSubmit} className="border-2 border-zinc-900 p-4 rounded-xl space-y-3 w-full h-[450px] overflow-y-auto">
       <RenderMathText as={"h2"} className="text-base md:text-lg font-semibold mb-2 nocopy"  content={question?.text}/>
 
       {question?.options.map((opt, idx) => (
