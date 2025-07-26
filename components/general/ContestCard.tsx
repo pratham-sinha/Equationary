@@ -35,13 +35,13 @@ export function ContestCard({
         </h2>
 
         {hasEnded ? (
-          <div className="flex  gap-2">
+          <div className="flex flex-col gap-2">
           <span className="text-sm text-center px-2 py-0.5 rounded-full bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold">
             Ended
           </span>
-          <span className="text-sm text-center px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 font-medium">
+          {/* <span className="text-sm text-center px-2 py-0.5 rounded-sm bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 font-medium">
             {count} participant{count !== 1 && "s"}
-          </span>
+          </span> */}
           </div>
         ) : hasStarted ? (
           <span className="relative flex size-3">

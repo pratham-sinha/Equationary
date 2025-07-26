@@ -125,9 +125,7 @@ export async function submitAnswer({
     return { status: "error", message: "Contest not found" };
   }
 
-  if (now.getTime() > contest.endTime.getTime()) {
-    return { status: "error", message: "Contest has already ended" };
-  }
+  
     const existing = await prisma.submission.findUnique({
     where: {
       userId_contestId_questionId: {
@@ -162,7 +160,9 @@ export async function submitAnswer({
     },
   });
  
- 
+   const isContestActive = now.getTime() <= contest.endTime.getTime();
+
+   if(isContestActive){
 
   const score = await prisma.score.upsert({
     where: {
@@ -194,14 +194,13 @@ export async function submitAnswer({
     submittedAt:score.submittedAt,
     
   });
-  
+}
  
   revalidatePath(`/contest/${contestId}`);
   
   return { status: "success", isCorrect };
 }
 catch{
- alert("server err in submission");
   return {status:"error", message:"server error during submission"}
 }
 }
