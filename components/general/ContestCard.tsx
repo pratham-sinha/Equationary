@@ -39,9 +39,11 @@ export function ContestCard({
           <span className="text-sm text-center px-2 py-0.5 rounded-full bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold">
             Ended
           </span>
-          {/* <span className="text-sm text-center px-2 py-0.5 rounded-sm bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 font-medium">
-            {count} participant{count !== 1 && "s"}
-          </span> */}
+          {count > 20 && (
+      <span className="text-sm text-center px-2 py-0.5 rounded-sm bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 font-medium">
+        {count} participant{count !== 1 && "s"}
+      </span>
+    )}
           </div>
         ) : hasStarted ? (
           <span className="relative flex size-3">
