@@ -68,9 +68,7 @@ export function QuestionCard({
    
   }
   else if(res?.status === "error"){
-   toast(res.message,{
-          description: "Be on time next time :)"}
-        )
+   toast(res.message)
   }
   else {
     setSubmitting(false);
