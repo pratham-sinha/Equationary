@@ -1,5 +1,8 @@
 # Equationary – MCQ Contest + Blog Platform
 
+### Watch demo video on YT
+[![YouTube](https://img.shields.io/badge/YouTube-Video-red?logo=youtube&logoColor=white)](https://youtu.be/fowWQdAA-w0)
+
 A real-time contest platform with integrated blog/editorial support. Built for maths, logic, technologies and problem-solving content.
 
 ---
